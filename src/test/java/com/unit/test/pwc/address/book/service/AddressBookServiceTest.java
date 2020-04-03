@@ -72,7 +72,7 @@ public class AddressBookServiceTest {
     @Test
     public void testAllUniqueContacts() {
 
-        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveAllUniqueContacts("UNIQUE");
+        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveConditionalContacts("UNIQUE");
 
         //add contact1
         addressBookService.addContact(ADDRESS_BOOK_PLANET_EARTH, getNewTestContact());
@@ -90,7 +90,7 @@ public class AddressBookServiceTest {
         addressBookService.addContact(ADDRESS_BOOK_PLANET_MARS, getNewTestContact());
 
         //At this point we added 4 contacts but the below returned list should contain addition of 2 new records
-        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveAllUniqueContacts("UNIQUE");
+        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveConditionalContacts("UNIQUE");
 
         Assert.assertTrue(2 == retrievedContactsAfterAddingDuplicates.size() - retrievedContactsBeforeAddingDuplicates.size());
     }
@@ -98,7 +98,7 @@ public class AddressBookServiceTest {
     @Test
     public void testAllContacts() {
 
-        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveAllUniqueContacts("ALL");
+        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveConditionalContacts("ALL");
 
         //add contact1
         addressBookService.addContact(ADDRESS_BOOK_PLANET_EARTH, getNewTestContact());
@@ -116,7 +116,7 @@ public class AddressBookServiceTest {
         addressBookService.addContact(ADDRESS_BOOK_PLANET_MARS, getNewTestContact());
 
         //At this point we added 4 contacts but the below returned list should contain addition of 2 new records
-        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveAllUniqueContacts("ALL");
+        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveConditionalContacts("ALL");
 
         Assert.assertTrue(4 == retrievedContactsAfterAddingDuplicates.size() - retrievedContactsBeforeAddingDuplicates.size());
     }
@@ -124,7 +124,7 @@ public class AddressBookServiceTest {
     @Test
     public void testCOMMONContacts() {
 
-        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveAllUniqueContacts("COMMON");
+        List<Contact> retrievedContactsBeforeAddingDuplicates = addressBookService.retrieveConditionalContacts("COMMON");
 
         //add contact1
         addressBookService.addContact(ADDRESS_BOOK_PLANET_EARTH, getNewTestContact());
@@ -142,7 +142,7 @@ public class AddressBookServiceTest {
         addressBookService.addContact(ADDRESS_BOOK_PLANET_MARS, getNewTestContact());
 
         //At this point we added 4 contacts but the below returned list should contain addition of 2 new records
-        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveAllUniqueContacts("ALL");
+        List<Contact> retrievedContactsAfterAddingDuplicates = addressBookService.retrieveConditionalContacts("ALL");
 
         Assert.assertTrue(8 == retrievedContactsAfterAddingDuplicates.size() - retrievedContactsBeforeAddingDuplicates.size());
     }
