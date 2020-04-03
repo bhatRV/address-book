@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @RunWith(SpringRunner.class)
@@ -89,6 +90,13 @@ public class AddressBookIntegrationTest {
         Assert.assertEquals(response.getStatusCode().value(), 200);
     }
 
+    @Test
+    public void testRetrieveCommonContacts() {
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/api/v1/contacts?condition=COMMON"),
+                HttpMethod.GET, new HttpEntity<String>(null, null), String.class);
+        Assert.assertEquals(response.getStatusCode().value(), 200);
+     }
 
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;

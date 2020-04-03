@@ -2,10 +2,7 @@ package com.pwc.address.book.controller;
 
 import com.pwc.address.book.entities.Contact;
 import com.pwc.address.book.service.AddressBookService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,19 +78,22 @@ public class AddressBookController {
     }
 
     /**
-     * API to Get All the contacts  from a specified address book
-     * @return
+     * API to Get All the contacts  from a specified address book conditionally
+     * @return List
      */
 
-    @ApiOperation(value = "retrieves All Unique Contacts",
-            notes = "On successful invocation All the contacts from a specified address book will be retrieved.")
+    @ApiOperation(value = "retrieves All  Contacts based on the specified condition. ",
+            notes = " condition= ALL    :    On successful invocation All the contacts from a specified address book will be retrieved.\n" +
+                     "condition= UNIQUE : On successful invocation  contacts that UNIQUE accross multiple address-books will be returned.\n" +
+                     "condition= COMMON : On successful invocation  contacts that UNIQUE accross multiple address-books will be returned.")
+    @ApiParam(value = "condition",defaultValue = "ALL",allowableValues = " UNIQUE | ALL | COMMON ")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Returned upon successfully storing the contact")
+            @ApiResponse(code = 200, message = "Returned upon successfully fetching the contact list")
 
     })
     @GetMapping("/api/v1/contacts")
-    public List<Contact> retrieveUniqueContactsFromAllAddressBooks(@RequestParam(value = "unique", defaultValue = "false") Boolean unique) {
-        return addressBookService.retrieveAllUniqueContacts(unique);
+    public List<Contact> retrieveContactsFromAllAddressBooks(@RequestParam(value = "condition", defaultValue = "ALL") String condition) {
+        return addressBookService.retrieveAllUniqueContacts(condition.toUpperCase());
     }
 
 }

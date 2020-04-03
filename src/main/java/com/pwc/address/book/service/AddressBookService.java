@@ -12,26 +12,29 @@ import java.util.stream.Collectors;
 
 
 /**
- * @author  rashmi
+ * @author  Rashmi
  */
 @Service
 public class AddressBookService {
 
-    private static final String ADDRESS_BOOK_MELBOURNE = "address-book-melbourne";
-    private static final String ADDRESS_BOOK_SYDNEY = "address-book-sydney";
+    private static final String ADDRESS_BOOK_EARTH = "address-book-Earth";
+    private static final String ADDRESS_BOOK_MARS= "address-book-Mars";
 
     //TODO: should be replaced with appropriate persistence
     private final Map<String, List<Contact>> addressBooks = new HashMap<>();
 
     public AddressBookService() {
-        addressBooks.put(ADDRESS_BOOK_MELBOURNE, new ArrayList<>());
-        addressBooks.put(ADDRESS_BOOK_SYDNEY, new ArrayList<>());
+        //Pre-populate the Data
+        addressBooks.put(ADDRESS_BOOK_EARTH, new ArrayList<>());
+        addressBooks.put(ADDRESS_BOOK_MARS, new ArrayList<>());
 
-        this.addContact(ADDRESS_BOOK_MELBOURNE, new Contact("Thomas", "Allan", Arrays.asList("0421435543")));
-        this.addContact(ADDRESS_BOOK_MELBOURNE, new Contact("Victor", "Anderson", Arrays.asList("0421445543")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Shane", "Warne", Arrays.asList("0331445543")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Steve", "Smith", Arrays.asList("0331445545")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Ricky", "Ponting", Arrays.asList("03313411111")));
 
-        this.addContact(ADDRESS_BOOK_SYDNEY, new Contact("Steven", "Bailey", Arrays.asList("0435000111")));
-        this.addContact(ADDRESS_BOOK_SYDNEY, new Contact("Victor", "Anderson", Arrays.asList("0421445543")));
+
+        this.addContact(ADDRESS_BOOK_MARS, new Contact("David", "Warner", Arrays.asList("0331345543")));
+        this.addContact(ADDRESS_BOOK_MARS, new Contact("Ricky", "Ponting", Arrays.asList("03313411111")));
     }
 
     public Contact addContact(String addressBookId, Contact contact) {
@@ -64,13 +67,20 @@ public class AddressBookService {
         return addressBooks.get(addressBookId);
     }
 
-    public List<Contact> retrieveAllUniqueContacts(boolean unique) {
+    public List<Contact> retrieveAllUniqueContacts(String condition) {
         // assumed that the contact is unique it's name and numbers matches
         List<Contact> contacts = new ArrayList<>();
         addressBooks.values().forEach(contacts::addAll);
-        if (unique) {
+        if (condition.equals("UNIQUE")) {
             return contacts.stream().distinct().collect(Collectors.toList());
         }
+        else if (condition.equals("COMMON")) {
+            return contacts.stream()
+                    .filter(item -> Collections.frequency(contacts, item) >= 2).distinct()
+                    .collect(Collectors.toList());
+        }
+        //returns all
         return contacts;
     }
+
 }
