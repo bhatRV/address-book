@@ -13,6 +13,7 @@
 1. User Interface can be provided
 1. Default port will be tomcat's default port -8080
 1. Uses internal cache for storing the data. Can be enhanced to use H2 
+1. Retrieved data will be sorted by first name always
 
 ## HOW TO RUN THE SIMULATION
 
