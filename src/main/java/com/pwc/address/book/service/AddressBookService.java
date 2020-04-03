@@ -26,13 +26,13 @@ public class AddressBookService {
         addressBooks.put(ADDRESS_BOOK_EARTH, new ArrayList<>());
         addressBooks.put(ADDRESS_BOOK_MARS, new ArrayList<>());
 
-        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Shane", "Warne", Arrays.asList("0331445543")));
-        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Steve", "Smith", Arrays.asList("0331445545")));
-        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Ricky", "Ponting", Arrays.asList("03313411111")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Shane", "Warne", Collections.singletonList("0331445543")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Steve", "Smith", Collections.singletonList("0331445545")));
+        this.addContact(ADDRESS_BOOK_EARTH, new Contact("Ricky", "Ponting", Arrays.asList("03313411111", "03313411112")));
 
 
-        this.addContact(ADDRESS_BOOK_MARS, new Contact("David", "Warner", Arrays.asList("0331345543")));
-        this.addContact(ADDRESS_BOOK_MARS, new Contact("Ricky", "Ponting", Arrays.asList("03313411111")));
+        this.addContact(ADDRESS_BOOK_MARS, new Contact("David", "Warner", Arrays.asList("0331345543", "0331345553")));
+        this.addContact(ADDRESS_BOOK_MARS, new Contact("Ricky", "Ponting", Arrays.asList("03313411111", "03313411112")));
     }
 
     public Contact addContact(String addressBookId, Contact contact) {
