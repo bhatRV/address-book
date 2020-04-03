@@ -36,7 +36,7 @@ Run as application "AddressBookApplication.java"
 5. retrieve COMMON FROM MULTIPLE BOOKS http://localhost:8080/api/v1/contacts?condition=COMMON
 
    
-#### PRE configured Data#####
+#### PRE configured Data
 **address-book-Earth** To fetch data from this addressBook use this URL _GET http://localhost:8080/api/v1/address-book/address-book-Earth/contacts_
 ```JSON
 {
