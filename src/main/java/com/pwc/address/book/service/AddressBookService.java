@@ -9,16 +9,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
-
 /**
- * @author  Rashmi
+ * @author Rashmi
  */
 @Service
 public class AddressBookService {
 
     private static final String ADDRESS_BOOK_EARTH = "address-book-Earth";
-    private static final String ADDRESS_BOOK_MARS= "address-book-Mars";
+    private static final String ADDRESS_BOOK_MARS = "address-book-Mars";
 
     //TODO: should be replaced with appropriate persistence
     private final Map<String, List<Contact>> addressBooks = new HashMap<>();
@@ -64,21 +62,23 @@ public class AddressBookService {
         if (!addressBooks.containsKey(addressBookId)) {
             throw new ValidationException("AddressBook with the given Id does not exist");
         }
-        return addressBooks.get(addressBookId);
+        return (addressBooks.get(addressBookId)).stream().sorted(Comparator.comparing(Contact::getFirstName)).collect(Collectors.toList());
     }
 
-    public List<Contact> retrieveAllUniqueContacts(String condition) {
-        List<Contact> contacts = new ArrayList<>();
-        addressBooks.values().forEach(contacts::addAll);
+    public List<Contact> retrieveConditionalContacts(String condition) {
+
+        List<Contact> allContacts = new ArrayList<>();
+        addressBooks.values().forEach(allContacts::addAll);
+
+        List<Contact> sortedContact = allContacts.stream().sorted(Comparator.comparing(Contact::getFirstName)).collect(Collectors.toList());
         if (condition.equals("UNIQUE")) {
-            return contacts.stream().distinct().collect(Collectors.toList());
-        }
-        else if (condition.equals("COMMON")) {
-            return contacts.stream()
-                    .filter(item -> Collections.frequency(contacts, item) >= 2).distinct()
+            return sortedContact.stream().distinct().collect(Collectors.toList());
+        } else if (condition.equals("COMMON")) {
+            return sortedContact.stream()
+                    .filter(item -> Collections.frequency(sortedContact, item) >= 2).distinct().sorted()
                     .collect(Collectors.toList());
         }
-        return contacts;
+        return sortedContact;
     }
 
 }

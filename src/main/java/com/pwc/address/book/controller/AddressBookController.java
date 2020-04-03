@@ -93,7 +93,7 @@ public class AddressBookController {
     })
     @GetMapping("/api/v1/contacts")
     public List<Contact> retrieveContactsFromAllAddressBooks(@RequestParam(value = "condition", defaultValue = "ALL") String condition) {
-        return addressBookService.retrieveAllUniqueContacts(condition.toUpperCase());
+        return addressBookService.retrieveConditionalContacts(condition.toUpperCase());
     }
 
 }
