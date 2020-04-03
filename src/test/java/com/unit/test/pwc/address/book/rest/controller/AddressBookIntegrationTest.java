@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 
 
 @RunWith(SpringRunner.class)
@@ -42,8 +42,18 @@ public class AddressBookIntegrationTest {
     TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Test
-    public void testAddContact() {
-        Contact contact = new Contact("Rashmi", "Bhat", Arrays.asList("0412 123 345", "0412 123 346"));
+    public void testAddContact_phoneNumber_Validation_failure() {
+        Contact contact = new Contact("Rashmi", "Bhat", Arrays.asList("a312123345", "0312123346"));
+        HttpEntity<Contact> entity = new HttpEntity<>(contact);
+
+        ResponseEntity<Contact> response = restTemplate.exchange(
+                createURLWithPort(CONTACTS_END_POINT),
+                HttpMethod.POST, entity, Contact.class);
+        Assert.assertEquals(400, response.getStatusCode().value());
+     }
+    @Test
+    public void testAddContact_success() {
+        Contact contact = new Contact("Rashmi", "Bhat", Arrays.asList("0312123345", "0312123346"));
         HttpEntity<Contact> entity = new HttpEntity<>(contact);
 
         ResponseEntity<Contact> response = restTemplate.exchange(
@@ -56,8 +66,18 @@ public class AddressBookIntegrationTest {
     }
 
     @Test
-    public void testRemoveContact() {
-        Contact contact = new Contact("first-name", "last-name", Arrays.asList("0412 123 345", "0412 123 346"));
+    public void testRemoveContact_notfound_failure() {
+       String deletionUrl = createURLWithPort("/api/v1/address-book/" + TEST_ADDRESS_BOOK + "/contacts/" + "04ff0485-7eef-4a91-b85b-d58bd4d4e219");
+        ResponseEntity<String> response=restTemplate.exchange(
+                deletionUrl,
+                HttpMethod.DELETE, new HttpEntity<String>(null, null), String.class);
+        Assert.assertEquals(500, response.getStatusCode().value());
+
+    }
+
+    @Test
+    public void testRemoveContact_success() {
+        Contact contact = new Contact("first-name", "last-name", Arrays.asList("0412123345", "0412123346"));
         Contact addedContact = addressBookService.addContact(TEST_ADDRESS_BOOK, contact);
 
         String deletionUrl = createURLWithPort("/api/v1/address-book/" + TEST_ADDRESS_BOOK + "/contacts/" + addedContact.getId());
@@ -73,8 +93,8 @@ public class AddressBookIntegrationTest {
     }
 
     @Test
-    public void testRetrieveAllContactsFromAddressBook() {
-        Contact contact = new Contact("first-name", "last-name", Arrays.asList("0412 123 345", "0412 123 346"));
+    public void testRetrieve_All_ContactsFromAddressBook_success() {
+        Contact contact = new Contact("first-name", "last-name", Arrays.asList("0412123345", "0412123346"));
         addressBookService.addContact(TEST_ADDRESS_BOOK, contact);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/v1/address-book/address-bookA/contacts"),
@@ -83,7 +103,7 @@ public class AddressBookIntegrationTest {
     }
 
     @Test
-    public void testRetrieveAllUniqueContacts() {
+    public void testRetrieve_UniqueContacts_success() {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/v1/contacts"),
                 HttpMethod.GET, new HttpEntity<String>(null, null), String.class);
@@ -91,7 +111,7 @@ public class AddressBookIntegrationTest {
     }
 
     @Test
-    public void testRetrieveCommonContacts() {
+    public void testRetrieve_Common_Contacts_success() {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/api/v1/contacts?condition=COMMON"),
                 HttpMethod.GET, new HttpEntity<String>(null, null), String.class);

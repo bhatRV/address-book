@@ -6,7 +6,10 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * @author :rashmi
+ * This is the Entity object for storing contact details
+ */
 public class Contact {
 
     private String id;
@@ -23,7 +26,7 @@ public class Contact {
     //TODO: more validations using custom validator
     @NotNull(message = "Please provide phone numbers")
     @NotEmpty(message = "Please provide phone numbers")
-    List<String> phoneNumbers;
+    List<@Pattern(regexp="^03[0-9]{8}|^\\+[1-9]{3,14}|^[1-9]{1}[0-9]{3,14}") String> phoneNumbers;
 
 
     public Contact() {

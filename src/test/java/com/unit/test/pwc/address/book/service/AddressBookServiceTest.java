@@ -149,7 +149,7 @@ public class AddressBookServiceTest {
 
 
     private Contact getNewTestContact() {
-        return new Contact("Tom", "Cox", Arrays.asList("0421435534", "0432543123"));
+        return new Contact("Rashmi", "Bhat", Arrays.asList("0421435534", "0432543123"));
     }
 
 }

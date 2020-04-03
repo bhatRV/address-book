@@ -7,11 +7,12 @@ Author : RASHMI VISHNU
 1.start the application using bootRun
 2.browser : http://localhost:8080/swagger-ui.html#/address-book-controller
 
-######### ASSUMPTIONS and SCOPE for ENHANCEMENT:####
+######### ASSUMPTIONS and SCOPE for ENHANCEMENT :####
 1. Extensive test cases to cover more scenarios can be added
-2. Validations can be enhanced to include more on the inputs. Basic validations are provided for now
+2. Validations can be enhanced to include more on the inputs. Basic validations are provided for now. Phone number etc can be further validated
 3. User Interface can be provided
 4. Default port will be tomcat's default port -8080
+5.uses internal cache for storing the data. Can be enhanced to use H2 
 
 #######################HOW TO RUN THE SIMULATION###########################
 

@@ -68,7 +68,6 @@ public class AddressBookService {
     }
 
     public List<Contact> retrieveAllUniqueContacts(String condition) {
-        // assumed that the contact is unique it's name and numbers matches
         List<Contact> contacts = new ArrayList<>();
         addressBooks.values().forEach(contacts::addAll);
         if (condition.equals("UNIQUE")) {
@@ -79,7 +78,6 @@ public class AddressBookService {
                     .filter(item -> Collections.frequency(contacts, item) >= 2).distinct()
                     .collect(Collectors.toList());
         }
-        //returns all
         return contacts;
     }
 
