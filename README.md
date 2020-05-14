@@ -1,7 +1,6 @@
 # Project Name : Address Book Simulation
 
 ## Author : RASHMI VISHNU
-*NOTE: if you see name SUNIL somewhere its because I have used my husbands Laptop*
 
 ## SWAGGER URL
 1. Start the application using bootRun, **./gradlew bootRun**
